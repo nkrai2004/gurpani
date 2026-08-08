@@ -1,0 +1,8 @@
+/* Additive language selector only. Existing style.css is unchanged. */
+.language-switch{display:flex;align-items:center;gap:2px;margin-left:10px;padding:3px;border:1px solid rgba(255,255,255,.16);border-radius:999px;background:rgba(255,255,255,.05);flex-shrink:0}
+.language-option{border:0;background:transparent;color:#cdbfaf;padding:7px 9px;border-radius:999px;font-size:9px;font-weight:800;cursor:pointer;line-height:1;white-space:nowrap}
+.language-option.active{background:#d49a32;color:#1c0f05}
+html[lang="hi"] body{font-family:"Noto Sans Devanagari","DM Sans",Arial,sans-serif}
+html[lang="hi"] h1,html[lang="hi"] h2,html[lang="hi"] .product-info h3{font-family:"Noto Sans Devanagari",Manrope,Arial,sans-serif;letter-spacing:-.04em}
+@media(max-width:900px){.language-switch{margin-left:auto;margin-right:5px}.menu{margin-left:0}}
+@media(min-width:901px){.language-switch{margin-left:28px}}
