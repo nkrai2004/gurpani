@@ -239,3 +239,56 @@ Message: ${v('message')}`;
 
   setLanguage("en");
 })();
+
+
+/* iOS/mobile language selector touch fix.
+   Uses pointerup/click fallback and event delegation so the control remains clickable
+   even when the mobile navigation/header is layered above it. */
+(function () {
+  const selectors = [
+    '[data-lang="hi"]',
+    '[data-language="hi"]',
+    '#lang-hi',
+    '#language-hi',
+    '.lang-hi',
+    '.language-hi',
+    '[data-lang="en"]',
+    '[data-language="en"]',
+    '#lang-en',
+    '#language-en',
+    '.lang-en',
+    '.language-en'
+  ].join(',');
+
+  let lastTouch = 0;
+
+  function activateLanguageControl(el) {
+    if (!el) return;
+    const now = Date.now();
+    if (now - lastTouch < 350) return;
+    lastTouch = now;
+
+    // Trigger the existing click handler rather than replacing its translation logic.
+    el.click();
+  }
+
+  document.addEventListener('pointerup', function (event) {
+    const el = event.target.closest && event.target.closest(selectors);
+    if (el) activateLanguageControl(el);
+  }, { passive: true });
+
+  document.addEventListener('touchend', function (event) {
+    const el = event.target.closest && event.target.closest(selectors);
+    if (el) activateLanguageControl(el);
+  }, { passive: true });
+
+  // Ensure controls are keyboard accessible as well.
+  document.addEventListener('keydown', function (event) {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    const el = event.target.closest && event.target.closest(selectors);
+    if (el) {
+      event.preventDefault();
+      el.click();
+    }
+  });
+})();
